@@ -120,8 +120,7 @@ async function fetchCode() {
     editors.css.value = data.css;
     editors.js.value = data.js;
     updatePreview();
-}
-fetchCode();
+} fetchCode();
 function downloadFile(content, filename) {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
@@ -133,17 +132,14 @@ function downloadFile(content, filename) {
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
 }
-
 function downloadHTML() {
     const content = document.getElementById('html').value;
     downloadFile(content, 'index.html');
 }
-
 function downloadCSS() {
     const content = document.getElementById('css').value;
     downloadFile(content, 'styles.css');
 }
-
 function downloadJS() {
     const content = document.getElementById('js').value;
     downloadFile(content, 'script.js');
@@ -151,8 +147,6 @@ function downloadJS() {
 function toggleDropdown() {
     document.getElementById("downloadDropdown").classList.toggle("show");
 }
-
-// Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropdown button')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
