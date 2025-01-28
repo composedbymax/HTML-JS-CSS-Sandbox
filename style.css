@@ -1,6 +1,6 @@
 body {
     background:var(--back);
-    color:#000;
+    color:var(--text-color);
 }
 .container {
     display: flex;
@@ -21,6 +21,8 @@ body {
     font-family: monospace;
     resize: none;
     border: none;
+    background: var(--back);
+    color: var(--text-color);
 }
 .preview-panel {
     width: 30%;
@@ -79,7 +81,8 @@ body {
     font-size: 14px;
 }
 button {
-    padding: 1rem 0rem;
+    padding: 10px 0rem;
     margin-right: 5px;
     cursor: pointer;
+    font-weight:bold;
 }

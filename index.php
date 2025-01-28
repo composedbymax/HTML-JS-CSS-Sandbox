@@ -24,6 +24,7 @@
         </div>
         <div class="preview-panel">
             <div class="toolbar">
+                <button onclick="toggleTheme()">Theme</button>
                 <button onclick="saveCode()">Save</button>
                 <button onclick="fetchCode()">Fetch</button>
                 <div class="resize-buttons">
