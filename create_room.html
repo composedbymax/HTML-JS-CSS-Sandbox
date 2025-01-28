@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Coding Room</h1>
+        <form action="create_room.php" method="POST">
+            <input type="text" name="room" 
+                   placeholder="Room Name (letters, numbers, underscores)" 
+                   pattern="[A-Za-z0-9_]+" required>
+            <button type="submit">Create Room</button>
+        </form>
+    </div>
+</body>
+</html>
