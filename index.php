@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<?php include 'redirect.php' ?>
 <head>
-    <?php include 'redirect.php' ?>
     <title>Code Room: <?= htmlspecialchars($room) ?></title>
     <link rel="stylesheet" href="root.css">
     <link rel="stylesheet" href="style.css">
@@ -25,7 +25,7 @@
         <div class="preview-panel">
             <div class="toolbar">
                 <button onclick="saveCode()">Save</button>
-                <button onclick="fetchCode()">Fetch Changes</button>
+                <button onclick="fetchCode()">Fetch</button>
                 <div class="resize-buttons">
                     <button class="resize-button" onclick="resizePanel(-5)">◀</button>
                     <button class="resize-button" onclick="resizePanel(5)">▶</button>

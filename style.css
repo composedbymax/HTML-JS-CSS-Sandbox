@@ -1,5 +1,5 @@
 body {
-    background:#fff;
+    background:var(--back);
     color:#000;
 }
 .container {
@@ -13,7 +13,7 @@ body {
 }
 .editor {
     flex: 1;
-    border: 1px solid #000000;
+    border: 1px solid var(--border);
 }
 .editor textarea {
     width: 100%;
@@ -24,50 +24,45 @@ body {
 }
 .preview-panel {
     width: 30%;
-    border-left: 1px solid #000000;
+    border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
 }
-
 #preview {
     width: 100%;
-    height: 70%;
+    height: 90%;
     border: none;
 }
-
 .error-console {
     height: 20%;
-    background: #1e1e1e;
-    color: #ff5555;
+    background: var(--second);
+    color: var(--red);
     font-family: monospace;
-    padding: 8px;
     overflow-y: auto;
-    border-top: 1px solid #000000;
+    border-top: 1px solid var(--border);
 }
-
 .error-console .error-message {
-    margin-bottom: 4px;
+    margin-bottom:4px;
     word-wrap: break-word;
     font-size: 12px;
 }
 .error-console .error-message.error {
-    color: #ff5555;
+    color: var(--red);
 }
 .error-console .error-message.warn {
-    color: #ffb86c;
+    color: var(--yellow);
 }
 .error-console .error-message.log {
-    color: #f8f8f2;
+    color: #fff;
 }
 .error-console .error-message.info {
-    color: #8be9fd;
+    color: var(--blue);
 }
 .error-console .error-message.debug {
-    color: #6272a4;
+    color: var(--accent);
 }
 .toolbar {
-    background: #ccc;
-    border-bottom: 1px solid #ccc;
+    background: var(--second);
     display: flex;
     align-items: center;
 }
@@ -84,7 +79,7 @@ body {
     font-size: 14px;
 }
 button {
-    padding: 5px 10px;
+    padding: 1rem 0rem;
     margin-right: 5px;
     cursor: pointer;
 }
