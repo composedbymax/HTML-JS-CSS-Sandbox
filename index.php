@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
-<?php
-include 'redirect.php'
-?>
 <head>
+    <?php include 'redirect.php' ?>
     <title>Code Room: <?= htmlspecialchars($room) ?></title>
     <link rel="stylesheet" href="root.css">
     <link rel="stylesheet" href="style.css">
@@ -34,6 +32,7 @@ include 'redirect.php'
                 </div>
             </div>
             <iframe id="preview"></iframe>
+            <div id="error-console" class="error-console"></div>
         </div>
     </div>
     <script src="script.js" async></script>

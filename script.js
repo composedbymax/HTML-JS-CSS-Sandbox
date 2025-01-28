@@ -24,17 +24,63 @@ function updatePreview() {
             </head>
             <body>
                 ${editors.html.value}
-                <script>${editors.js.value}<\/script>
+                <script>
+                    (function() {
+                        const consoleOutput = {
+                            log: window.parent.displayError,
+                            error: (msg) => window.parent.displayError(msg, null, 'error'),
+                            warn: (msg) => window.parent.displayError(msg, null, 'warn'),
+                            info: (msg) => window.parent.displayError(msg, null, 'info'),
+                            debug: (msg) => window.parent.displayError(msg, null, 'debug')
+                        };
+                        Object.keys(consoleOutput).forEach(method => {
+                            console[method] = function(...args) {
+                                const message = args.map(arg => 
+                                    typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                                ).join(' ');
+                                consoleOutput[method](message);
+                            };
+                        });
+                        window.onerror = function(msg, url, line, col, error) {
+                            window.parent.displayError(msg, line, 'error');
+                            return false;
+                        };
+                        window.onunhandledrejection = function(event) {
+                            window.parent.displayError('Unhandled Promise: ' + event.reason, null, 'error');
+                        };
+                    })();
+                    try {
+                        ${editors.js.value}
+                    } catch (error) {
+                        console.error('Script Error: ' + error.message);
+                    }
+                <\/script>
             </body>
         </html>
     `;
-    preview.open();
-    preview.write(content);
-    preview.close();
+    try {
+        preview.open();
+        preview.write(content);
+        preview.close();
+    } catch (error) {
+        displayError('Preview Error: ' + error.message, null, 'error');
+    }
+}
+function displayError(message, line = null, type = 'error') {
+    const errorConsole = document.getElementById('error-console');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message ' + type;
+    const timestamp = new Date().toLocaleTimeString();
+    const lineInfo = line ? `[Line ${line}]` : '';
+    const typeLabel = type.toUpperCase();
+    errorDiv.textContent = `[${timestamp}] ${typeLabel} ${lineInfo}: ${message}`;
+    errorConsole.appendChild(errorDiv);
+    errorConsole.scrollTop = errorConsole.scrollHeight;
 }
 Object.values(editors).forEach(editor => {
     editor.addEventListener('input', () => {
         clearTimeout(timeout);
+        document.getElementById('error-console').innerHTML = '';
         timeout = setTimeout(updatePreview, 500);
     });
 });
