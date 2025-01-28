@@ -24,15 +24,23 @@
         </div>
         <div class="preview-panel">
             <div class="toolbar">
-                <button onclick="toggleTheme()">Theme</button>
                 <button onclick="saveCode()">Save</button>
                 <button onclick="fetchCode()">Fetch</button>
                 <button onclick="toggleConsole()">Console</button>
-                <div class="resize-buttons">
+                <button onclick="toggleTheme()">Theme</button>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()">Download</button>
+                    <div id="downloadDropdown" class="dropdown-content">
+                        <button onclick="downloadHTML()">HTML</button>
+                        <button onclick="downloadCSS()">CSS</button>
+                        <button onclick="downloadJS()">JS</button>
+                    </div>
+                </div>
+            </div>
+            <div class="resize-buttons">
                     <button class="resize-button" onclick="resizePanel(-5)">◀</button>
                     <button class="resize-button" onclick="resizePanel(5)">▶</button>
                 </div>
-            </div>
             <iframe id="preview"></iframe>
             <div id="error-console" class="error-console"></div>
         </div>

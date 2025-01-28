@@ -16,7 +16,7 @@ function resizePanel(change) {
     let currentWidth = parseFloat(getComputedStyle(editorPanel).width);
     let containerWidth = parseFloat(getComputedStyle(editorPanel.parentElement).width);
     let currentPercentage = (currentWidth / containerWidth) * 100;
-    let newPercentage = Math.min(Math.max(currentPercentage + change, 30), 90);
+    let newPercentage = Math.min(Math.max(currentPercentage + change, 20), 90);
     editorPanel.style.width = `${newPercentage}%`;
     previewPanel.style.width = `${100 - newPercentage}%`;
     window.dispatchEvent(new Event('resize'));
@@ -122,3 +122,45 @@ async function fetchCode() {
     updatePreview();
 }
 fetchCode();
+function downloadFile(content, filename) {
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+}
+
+function downloadHTML() {
+    const content = document.getElementById('html').value;
+    downloadFile(content, 'index.html');
+}
+
+function downloadCSS() {
+    const content = document.getElementById('css').value;
+    downloadFile(content, 'styles.css');
+}
+
+function downloadJS() {
+    const content = document.getElementById('js').value;
+    downloadFile(content, 'script.js');
+}
+function toggleDropdown() {
+    document.getElementById("downloadDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown button')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
