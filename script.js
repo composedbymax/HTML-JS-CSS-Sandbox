@@ -3,10 +3,8 @@ const editors = {
     css: document.getElementById('css'),
     js: document.getElementById('js')
 };
-
 const preview = document.getElementById('preview').contentWindow.document;
 let timeout;
-
 function updatePreview() {
     const content = `
         <html>
@@ -19,19 +17,16 @@ function updatePreview() {
             </body>
         </html>
     `;
-    
     preview.open();
     preview.write(content);
     preview.close();
 }
-
 Object.values(editors).forEach(editor => {
     editor.addEventListener('input', () => {
         clearTimeout(timeout);
         timeout = setTimeout(updatePreview, 500);
     });
 });
-
 async function saveCode() {
     const room = new URLSearchParams(window.location.search).get('room');
     const response = await fetch('save_code.php', {
@@ -44,26 +39,20 @@ async function saveCode() {
             js: editors.js.value
         })
     });
-    
     const result = await response.json();
     alert(result.success ? 'Saved successfully!' : `Error: ${result.error}`);
 }
-
 async function fetchCode() {
     const room = new URLSearchParams(window.location.search).get('room');
     const response = await fetch(`fetch_code.php?room=${encodeURIComponent(room)}`);
     const data = await response.json();
-    
     if (data.error) {
         alert(`Error: ${data.error}`);
         return;
     }
-    
     editors.html.value = data.html;
     editors.css.value = data.css;
     editors.js.value = data.js;
     updatePreview();
 }
-
-// Initial fetch
 fetchCode();

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Create New Room</title>
+    <link rel="stylesheet" href="root.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

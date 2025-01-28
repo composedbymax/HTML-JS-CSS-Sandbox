@@ -1,11 +1,8 @@
 <?php
 $room = $_POST['room'] ?? '';
-
-// Validate room name
 if (!preg_match('/^[A-Za-z0-9_]+$/', $room)) {
     die('Invalid room name!');
 }
-
 $dir = "rooms/$room";
 if (!file_exists($dir)) {
     mkdir($dir, 0755, true);
@@ -14,6 +11,6 @@ if (!file_exists($dir)) {
     file_put_contents("$dir/js.js", '');
 }
 
-header("Location: app.php?room=$room");
+header("Location: index.php?room=$room");
 exit;
 ?>

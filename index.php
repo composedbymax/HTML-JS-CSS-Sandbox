@@ -1,14 +1,11 @@
-<?php
-$room = $_GET['room'] ?? '';
-if (!preg_match('/^[A-Za-z0-9_]+$/', $room) || !is_dir("rooms/$room")) {
-    header("Location: create_room.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html>
+<?php
+include 'redirect.php'
+?>
 <head>
     <title>Code Room: <?= htmlspecialchars($room) ?></title>
+    <link rel="stylesheet" href="root.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
