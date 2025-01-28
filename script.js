@@ -6,8 +6,6 @@ const editors = {
 const preview = document.getElementById('preview').contentWindow.document;
 let timeout;
 document.body.classList.toggle('dark-theme', localStorage.getItem('darkTheme') === 'true');
-
-// Add the theme toggle function
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
     localStorage.setItem('darkTheme', document.body.classList.contains('dark-theme'));
@@ -83,6 +81,10 @@ function displayError(message, line = null, type = 'error') {
     errorDiv.textContent = `[${timestamp}] ${typeLabel} ${lineInfo}: ${message}`;
     errorConsole.appendChild(errorDiv);
     errorConsole.scrollTop = errorConsole.scrollHeight;
+}
+function toggleConsole() {
+    const console = document.getElementById('error-console');
+    console.classList.toggle('visible');
 }
 Object.values(editors).forEach(editor => {
     editor.addEventListener('input', () => {

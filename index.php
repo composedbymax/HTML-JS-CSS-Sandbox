@@ -27,6 +27,7 @@
                 <button onclick="toggleTheme()">Theme</button>
                 <button onclick="saveCode()">Save</button>
                 <button onclick="fetchCode()">Fetch</button>
+                <button onclick="toggleConsole()">Console</button>
                 <div class="resize-buttons">
                     <button class="resize-button" onclick="resizePanel(-5)">◀</button>
                     <button class="resize-button" onclick="resizePanel(5)">▶</button>

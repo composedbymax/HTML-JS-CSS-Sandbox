@@ -42,6 +42,11 @@ body {
     font-family: monospace;
     overflow-y: auto;
     border-top: 1px solid var(--border);
+    display: none;
+}
+
+.error-console.visible {
+    display: block;
 }
 .error-console .error-message {
     margin-bottom:4px;
