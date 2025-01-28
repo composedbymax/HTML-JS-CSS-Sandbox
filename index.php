@@ -28,10 +28,14 @@ include 'redirect.php'
             <div class="toolbar">
                 <button onclick="saveCode()">Save</button>
                 <button onclick="fetchCode()">Fetch Changes</button>
+                <div class="resize-buttons">
+                    <button class="resize-button" onclick="resizePanel(-5)">◀</button>
+                    <button class="resize-button" onclick="resizePanel(5)">▶</button>
+                </div>
             </div>
             <iframe id="preview"></iframe>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js" async></script>
 </body>
 </html>

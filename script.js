@@ -5,6 +5,17 @@ const editors = {
 };
 const preview = document.getElementById('preview').contentWindow.document;
 let timeout;
+function resizePanel(change) {
+    const editorPanel = document.querySelector('.editor-panel');
+    const previewPanel = document.querySelector('.preview-panel');
+    let currentWidth = parseFloat(getComputedStyle(editorPanel).width);
+    let containerWidth = parseFloat(getComputedStyle(editorPanel.parentElement).width);
+    let currentPercentage = (currentWidth / containerWidth) * 100;
+    let newPercentage = Math.min(Math.max(currentPercentage + change, 30), 90);
+    editorPanel.style.width = `${newPercentage}%`;
+    previewPanel.style.width = `${100 - newPercentage}%`;
+    window.dispatchEvent(new Event('resize'));
+}
 function updatePreview() {
     const content = `
         <html>

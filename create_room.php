@@ -10,7 +10,6 @@ if (!file_exists($dir)) {
     file_put_contents("$dir/css.css", '');
     file_put_contents("$dir/js.js", '');
 }
-
 header("Location: index.php?room=$room");
 exit;
 ?>
