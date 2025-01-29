@@ -158,3 +158,52 @@ button {
     background: var(--button);
     color:var(--text-color);
 }
+.notification-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--second);
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.notification-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-overlay.success {
+    border-left: 4px solid var(--green);
+}
+
+.notification-overlay.error {
+    border-left: 4px solid var(--red);
+}
+.notification-overlay button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--accent);
+    color: var(--text);
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.notification-overlay button:hover {
+    background: var(--accenth);
+}
+
+.notification-overlay button:last-child {
+    background: var(--red);
+}
+
+.notification-overlay button:last-child:hover {
+    background: var(--redh);
+}

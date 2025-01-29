@@ -104,34 +104,96 @@ Object.values(editors).forEach(editor => {
         timeout = setTimeout(updatePreview, 500);
     });
 });
+function showNotification(message, type = 'success') {
+    const overlay = document.createElement('div');
+    overlay.className = `notification-overlay ${type}`;
+    overlay.textContent = message;
+    document.body.appendChild(overlay);
+    setTimeout(() => {
+        overlay.classList.add('show');
+    }, 10);
+    setTimeout(() => {
+        overlay.classList.remove('show');
+        setTimeout(() => document.body.removeChild(overlay), 300);
+    }, 1500);
+}
 async function sendCode() {
     const room = new URLSearchParams(window.location.search).get('room');
-    const response = await fetch('send_code.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            room,
-            html: editors.html.value,
-            css: editors.css.value,
-            js: editors.js.value
-        })
+    try {
+        const response = await fetch('send_code.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                room,
+                html: editors.html.value,
+                css: editors.css.value,
+                js: editors.js.value
+            })
+        });
+        const result = await response.json();
+        showNotification(
+            result.success ? 'Saved successfully!' : `Error: ${result.error}`,
+            result.success ? 'success' : 'error'
+        );
+    } catch (error) {
+        showNotification('Connection failed. Please check your internet connection.', 'error');
+    }
+}
+function showConfirmDialog(message) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'notification-overlay';
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        messageDiv.style.marginBottom = '15px';
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.gap = '10px';
+        buttonContainer.style.justifyContent = 'center';
+        const confirmButton = document.createElement('button');
+        confirmButton.textContent = 'Confirm';
+        confirmButton.onclick = () => {
+            document.body.removeChild(overlay);
+            resolve(true);
+        };
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.onclick = () => {
+            document.body.removeChild(overlay);
+            resolve(false);
+        };
+        buttonContainer.appendChild(confirmButton);
+        buttonContainer.appendChild(cancelButton);
+        overlay.appendChild(messageDiv);
+        overlay.appendChild(buttonContainer);
+        document.body.appendChild(overlay);
+        setTimeout(() => overlay.classList.add('show'), 10);
     });
-    const result = await response.json();
-    alert(result.success ? 'Saved successfully!' : `Error: ${result.error}`);
 }
 async function fetchCode() {
     const room = new URLSearchParams(window.location.search).get('room');
-    const response = await fetch(`fetch_code.php?room=${encodeURIComponent(room)}`);
-    const data = await response.json();
-    if (data.error) {
-        alert(`Error: ${data.error}`);
-        return;
+    const isInitialLoad = !document.getElementById('html').value && 
+                          !document.getElementById('css').value && 
+                          !document.getElementById('js').value;
+    if (!isInitialLoad) {
+        const confirmed = await showConfirmDialog('Are you sure you want to fetch code? This will overwrite your current code.');
+        if (!confirmed) return;
     }
-    editors.html.value = data.html;
-    editors.css.value = data.css;
-    editors.js.value = data.js;
-    updatePreview();
-} 
+    try {
+        const response = await fetch(`fetch_code.php?room=${encodeURIComponent(room)}`);
+        const data = await response.json();
+        if (data.error) {
+            showNotification(`Error: ${data.error}`, 'error');
+            return;
+        }
+        editors.html.value = data.html;
+        editors.css.value = data.css;
+        editors.js.value = data.js;
+        updatePreview();
+    } catch (error) {
+        showNotification('Connection failed. Please check your internet connection.', 'error');
+    }
+}
 fetchCode();
 function downloadFile(content, filename) {
     const blob = new Blob([content], { type: 'text/plain' });
