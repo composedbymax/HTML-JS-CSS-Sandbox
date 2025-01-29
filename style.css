@@ -14,6 +14,40 @@ body {
 .editor {
     flex: 1;
     border: 1px solid var(--border);
+    position: relative;
+}
+.drop-zone {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    text-align: center;
+    pointer-events: none;
+}
+.editor.drag-over .drop-zone {
+    display: flex;
+}
+.preview-panel.drag-over::before {
+    content: 'Drop files to parse';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    z-index: 10;
 }
 .editor textarea {
     width: 100%;
@@ -29,11 +63,15 @@ body {
     border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 #preview {
     width: 100%;
     height: 100%;
     border: none;
+}
+.preview-panel.drag-over #preview {
+    pointer-events: none;
 }
 .error-console {
     height: 20%;
@@ -44,7 +82,6 @@ body {
     border-top: 1px solid var(--border);
     display: none;
 }
-
 .error-console.visible {
     display: block;
 }

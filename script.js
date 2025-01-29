@@ -158,3 +158,93 @@ window.onclick = function(event) {
         }
     }
 }
+function setupDragAndDrop() {
+    const previewPanel = document.querySelector('.preview-panel');
+    const previewFrame = document.getElementById('preview');
+    const editors = document.querySelectorAll('.editor');
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.add('drag-over');
+        if (this === previewPanel) {
+            previewFrame.style.pointerEvents = 'none';
+        }
+    }
+    function handleDragLeave(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.remove('drag-over');
+        if (this === previewPanel) {
+            previewFrame.style.pointerEvents = 'auto';
+        }
+    }
+    function handleEditorDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.remove('drag-over');
+        const files = Array.from(e.dataTransfer.files);
+        const editorType = this.querySelector('.editor-textarea').dataset.type;
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const textarea = document.getElementById(editorType);
+                textarea.value = content;
+                updatePreview();
+            };
+            reader.readAsText(file);
+        });
+    }
+    function handlePreviewDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.remove('drag-over');
+        const files = Array.from(e.dataTransfer.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const extension = file.name.split('.').pop().toLowerCase();
+                if (extension === 'html') {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(content, 'text/html');
+                    const htmlContent = Array.from(doc.body.children)
+                        .filter(el => el.tagName !== 'STYLE' && el.tagName !== 'SCRIPT')
+                        .map(el => el.outerHTML)
+                        .join('\n');
+                    document.getElementById('html').value = htmlContent;
+                    const cssContent = Array.from(doc.getElementsByTagName('style'))
+                        .map(style => style.textContent)
+                        .join('\n');
+                    document.getElementById('css').value = cssContent;
+                    const jsContent = Array.from(doc.getElementsByTagName('script'))
+                        .map(script => script.textContent)
+                        .join('\n');
+                    document.getElementById('js').value = jsContent;
+                } else {
+                    switch(extension) {
+                        case 'css':
+                            document.getElementById('css').value = content;
+                            break;
+                        case 'js':
+                            document.getElementById('js').value = content;
+                            break;
+                        default:
+                            displayError(`Unsupported file type: ${extension}`, null, 'warn');
+                    }
+                }
+                updatePreview();
+            };
+            reader.readAsText(file);
+        });
+    }
+    editors.forEach(editor => {
+        editor.addEventListener('dragover', handleDragOver);
+        editor.addEventListener('dragleave', handleDragLeave);
+        editor.addEventListener('drop', handleEditorDrop);
+    });
+    previewPanel.addEventListener('dragover', handleDragOver);
+    previewPanel.addEventListener('dragleave', handleDragLeave);
+    previewPanel.addEventListener('drop', handlePreviewDrop);
+}
+setupDragAndDrop();

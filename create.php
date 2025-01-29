@@ -24,19 +24,16 @@
             max-width: 400px;
             text-align: center;
         }
-        
         h1 {
             font-size: 24px;
             color: #333;
             margin-bottom: 20px;
         }
-        
         form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-        
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
@@ -45,11 +42,9 @@
             outline: none;
             transition: border-color 0.3s;
         }
-
         input[type="text"]:focus {
             border-color: #007bff;
         }
-        
         button {
             padding: 12px;
             background-color: #007bff;
@@ -60,11 +55,9 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         button:active {
             background-color: #004080;
         }

@@ -11,15 +11,18 @@
         <div class="editor-panel">
             <div class="editor">
                 <h3>HTML</h3>
-                <textarea id="html"></textarea>
+                <textarea id="html" class="editor-textarea" data-type="html"></textarea>
+                <div class="drop-zone" data-target="html">Drop HTML files here</div>
             </div>
             <div class="editor">
                 <h3>CSS</h3>
-                <textarea id="css"></textarea>
+                <textarea id="css" class="editor-textarea" data-type="css"></textarea>
+                <div class="drop-zone" data-target="css">Drop CSS files here</div>
             </div>
             <div class="editor">
                 <h3>JavaScript</h3>
-                <textarea id="js"></textarea>
+                <textarea id="js" class="editor-textarea" data-type="js"></textarea>
+                <div class="drop-zone" data-target="js">Drop JavaScript files here</div>
             </div>
         </div>
         <div class="preview-panel">
