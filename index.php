@@ -27,7 +27,7 @@
         </div>
         <div class="preview-panel">
             <div class="toolbar">
-                <button onclick="saveCode()">Save</button>
+                <button onclick="sendCode()">Send</button>
                 <button onclick="fetchCode()">Fetch</button>
                 <button onclick="toggleConsole()">Console</button>
                 <button onclick="toggleTheme()">Theme</button>

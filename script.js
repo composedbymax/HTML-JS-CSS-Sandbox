@@ -21,8 +21,19 @@ function resizePanel(change) {
     previewPanel.style.width = `${100 - newPercentage}%`;
     window.dispatchEvent(new Event('resize'));
 }
+document.querySelectorAll('.resize-button').forEach(button => {
+    let interval;
+    const change = button.onclick.toString().includes('-5') ? -5 : 5;
+    ['mousedown', 'touchstart'].forEach(event => 
+        button.addEventListener(event, () => interval = setInterval(() => resizePanel(change), 50))
+    );
+    ['mouseup', 'mouseleave', 'touchend'].forEach(event => 
+        button.addEventListener(event, () => clearInterval(interval))
+    );
+});
 function updatePreview() {
     const content = `
+        <!DOCTYPE html>
         <html>
             <head>
                 <style>${editors.css.value}</style>
@@ -93,9 +104,9 @@ Object.values(editors).forEach(editor => {
         timeout = setTimeout(updatePreview, 500);
     });
 });
-async function saveCode() {
+async function sendCode() {
     const room = new URLSearchParams(window.location.search).get('room');
-    const response = await fetch('save_code.php', {
+    const response = await fetch('send_code.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -120,7 +131,8 @@ async function fetchCode() {
     editors.css.value = data.css;
     editors.js.value = data.js;
     updatePreview();
-} fetchCode();
+} 
+fetchCode();
 function downloadFile(content, filename) {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
