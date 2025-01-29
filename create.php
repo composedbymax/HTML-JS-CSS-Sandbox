@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Room</title>
+    <link rel="stylesheet" href="/css/root.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fc;
-            margin: 0;
-            padding: 0;
+            background: var(--gradient);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color:var(--text);
         }
         .container {
-            background-color: #ffffff;
+            background-color: var(--dark);
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
@@ -26,7 +25,6 @@
         }
         h1 {
             font-size: 24px;
-            color: #333;
             margin-bottom: 20px;
         }
         form {
@@ -43,23 +41,23 @@
             transition: border-color 0.3s;
         }
         input[type="text"]:focus {
-            border-color: #007bff;
+            border-color: var(--accent);
         }
         button {
             padding: 12px;
-            background-color: #007bff;
-            color: white;
+            background-color: var(--accent);
             border: none;
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            color:var(--text);
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--accenth);
         }
         button:active {
-            background-color: #004080;
+            background-color: var(--accenth);
         }
     </style>
 </head>
