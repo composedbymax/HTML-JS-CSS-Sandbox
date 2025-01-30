@@ -23,7 +23,7 @@ function resizePanel(change) {
 }
 document.querySelectorAll('.resize-button').forEach(button => {
     let interval;
-    const change = button.onclick.toString().includes('-5') ? -5 : 5;
+    const change = button.onclick.toString().includes('-5') ? -2 : 2;
     ['mousedown', 'touchstart'].forEach(event => 
         button.addEventListener(event, () => interval = setInterval(() => resizePanel(change), 50))
     );
@@ -282,11 +282,6 @@ function setupDragAndDrop() {
                 if (extension === 'html') {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(content, 'text/html');
-                    const htmlContent = Array.from(doc.body.children)
-                        .filter(el => el.tagName !== 'STYLE' && el.tagName !== 'SCRIPT')
-                        .map(el => el.outerHTML)
-                        .join('\n');
-                    document.getElementById('html').value = htmlContent;
                     const cssContent = Array.from(doc.getElementsByTagName('style'))
                         .map(style => style.textContent)
                         .join('\n');
@@ -295,6 +290,9 @@ function setupDragAndDrop() {
                         .map(script => script.textContent)
                         .join('\n');
                     document.getElementById('js').value = jsContent;
+                    doc.querySelectorAll('style, script').forEach(el => el.remove());
+                    const htmlContent = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+                    document.getElementById('html').value = htmlContent;
                 } else {
                     switch(extension) {
                         case 'css':
