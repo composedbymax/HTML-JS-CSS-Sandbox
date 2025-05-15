@@ -44,11 +44,11 @@ function updatePreview() {
                 <script>
                     (function() {
                         const consoleOutput = {
-                            log: window.parent.displayError,
-                            error: (msg) => window.parent.displayError(msg, null, 'error'),
-                            warn: (msg) => window.parent.displayError(msg, null, 'warn'),
-                            info: (msg) => window.parent.displayError(msg, null, 'info'),
-                            debug: (msg) => window.parent.displayError(msg, null, 'debug')
+                            log: (msg) => window.parent.postMessage({ type: 'console', method: 'log', message: msg }, '*'),
+                            error: (msg) => window.parent.postMessage({ type: 'console', method: 'error', message: msg }, '*'),
+                            warn: (msg) => window.parent.postMessage({ type: 'console', method: 'warn', message: msg }, '*'),
+                            info: (msg) => window.parent.postMessage({ type: 'console', method: 'info', message: msg }, '*'),
+                            debug: (msg) => window.parent.postMessage({ type: 'console', method: 'debug', message: msg }, '*')
                         };
                         Object.keys(consoleOutput).forEach(method => {
                             console[method] = function(...args) {
@@ -59,11 +59,20 @@ function updatePreview() {
                             };
                         });
                         window.onerror = function(msg, url, line, col, error) {
-                            window.parent.displayError(msg, line, 'error');
+                            window.parent.postMessage({ 
+                                type: 'console', 
+                                method: 'error', 
+                                message: msg,
+                                line: line 
+                            }, '*');
                             return false;
                         };
                         window.onunhandledrejection = function(event) {
-                            window.parent.displayError('Unhandled Promise: ' + event.reason, null, 'error');
+                            window.parent.postMessage({ 
+                                type: 'console', 
+                                method: 'error', 
+                                message: 'Unhandled Promise: ' + event.reason 
+                            }, '*');
                         };
                     })();
                     try {
@@ -82,12 +91,16 @@ function updatePreview() {
         if (iframe.src) {
             URL.revokeObjectURL(iframe.src);
         }
-        
         iframe.src = blobURL;
     } catch (error) {
         displayError('Preview Error: ' + error.message, null, 'error');
     }
 }
+window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'console') {
+        displayError(event.data.message, event.data.line, event.data.method);
+    }
+});
 function displayError(message, line = null, type = 'error') {
     const errorConsole = document.getElementById('error-console');
     const errorDiv = document.createElement('div');

@@ -1,10 +1,27 @@
+<?php include '../check_auth.php';?>
+<?php include 'redirect.php' ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'redirect.php' ?>
 <head>
-    <title>Code Room: <?= htmlspecialchars($room) ?></title>
-    <link rel="stylesheet" href="root.css">
-    <link rel="stylesheet" href="style.css">
+  <title>CODEVANILLA - <?= htmlspecialchars($room) ?></title>
+  <meta charset="UTF-8">
+  <meta name="description" content="CODEVANILLA Coding Rooms">
+  <meta name="author" content="github.com/composedbymax">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">  
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="root.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
